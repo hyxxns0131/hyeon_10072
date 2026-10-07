@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 법당 · 분야별 필수 AI 서비스</title>
+  <meta name="description" content="NO 번뇌, JUST AI. 극락도 락이다! 분야별로 직접 써본 추천 AI 서비스" />
+  <link rel="icon" href="favicon.ico" />
+  <!-- 글꼴: font 폴더의 강원교육모두체 (Pretendard 는 로컬 글꼴이 없을 때 대체용) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/sections.css" />
+</head>
+<body>
+
+  <!-- ===== 상단 헤더 ===== -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="sidebar-toggle" id="sidebarToggle" aria-label="사이드바 열기" aria-controls="sidebar" aria-expanded="false">
+        <span class="bars"><span></span><span></span><span></span></span>
+      </button>
+      <a class="logo" href="#top" aria-label="AI 법당 맨 위로">
+        <span class="wheel" aria-hidden="true"></span>
+        <span>AI 법당</span>
+      </a>
+    </div>
+
+    <nav class="top-links">
+      <a href="#types">육바라밀</a>
+      <a href="#about">동자승</a>
+      <a href="#services">AI 경전</a>
+      <button type="button" id="navGuide">가이드</button>
+    </nav>
+
+    <div class="topbar-right">
+      <div class="search" id="searchWrap">
+        <span class="icon">🔍</span>
+        <input type="search" id="searchInput" placeholder="AI 검색" autocomplete="off" />
+        <button class="clear" id="clearBtn" aria-label="검색어 지우기">✕</button>
+      </div>
+      <button class="bgm-btn" id="bgmBtn" type="button" aria-pressed="false" aria-label="배경음악 켜기">
+        <span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span class="text">BGM OFF</span>
+      </button>
+      <button class="top-btn" id="toggleAll" aria-label="모든 카드 펼치기">
+        <span class="ico">📖</span><span class="text">모두 펼치기</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== 수행 진행 바: 스크롤한 만큼 법륜이 앞으로 ===== -->
+  <div class="journey" aria-hidden="true">
+    <div class="journey-track"><div class="journey-fill" id="journeyFill"></div></div>
+    <span class="wheel journey-ball" id="journeyBall"></span>
+  </div>
+
+  <!-- ===== 사이드바 ===== -->
+  <aside class="sidebar" id="sidebar" aria-label="사이드바">
+    <nav class="side-section">
+      <h3>육바라밀</h3>
+      <ul class="side-list" id="sideCategories"></ul>
+    </nav>
+
+    <nav class="side-section">
+      <h3>경전 바로가기</h3>
+      <ul class="side-list" id="sideServices"></ul>
+    </nav>
+
+    <button class="side-guide" id="sideGuide">
+      <span class="wheel" aria-hidden="true"></span>
+      <span><strong>동자승 가이드</strong>사용법 물어보기</span>
+    </button>
+  </aside>
+  <div class="backdrop" id="backdrop"></div>
+
+  <div class="content" id="top">
+
+    <!-- ===== 첫 화면: 거대한 제목 + 번뇌하는 목탁 키캡 ===== -->
+    <section class="hero" id="hero">
+      <div class="hero-ball" aria-hidden="true"></div>
+
+      <!-- 굿즈 스티커 -->
+      <span class="sticker s1" aria-hidden="true">번뇌 OUT ✌️</span>
+      <span class="sticker s2" aria-hidden="true">중생아 고생 많았다</span>
+      <span class="sticker s3" aria-hidden="true">오늘도 무사히 🙏</span>
+
+      <h1 class="hero-title">
+        <span class="line">
+          <span class="w"><span>NO 번뇌</span></span>
+          <span class="w it"><span>JUST AI</span></span>
+        </span>
+        <span class="line">
+          <span class="w"><span>극락도</span></span>
+          <span class="media" aria-hidden="true">
+            <span class="media-inner"><img src="img/temple/birojeon.jpg" alt="" /></span>
+          </span>
+          <span class="w logo-word"><span>락이다</span></span>
+        </span>
+      </h1>
+
+      <!-- 번뇌하는 목탁 키캡: 누를 때마다 번뇌 -1 -->
+      <div class="moktak-zone">
+        <p class="moktak-hint">PRESS ME ↓ <span>번뇌 하나씩 털어내기</span></p>
+        <!-- 목탁 키캡: 위(목탁 캡)만 눌리고 아래(스위치 받침)는 그대로 -->
+        <button class="moktak-key" id="moktakKey" type="button" aria-label="목탁 키캡 누르기, 번뇌 하나 덜기">
+          <svg class="mk" viewBox="0 0 240 270" aria-hidden="true">
+            <defs>
+              <radialGradient id="mkWood" cx="34%" cy="28%" r="80%">
+                <stop offset="0" stop-color="#f3b977" />
+                <stop offset=".35" stop-color="#d0843f" />
+                <stop offset=".75" stop-color="#9a5420" />
+                <stop offset="1" stop-color="#6e3612" />
+              </radialGradient>
+              <linearGradient id="mkHandle" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#d79552" />
+                <stop offset="1" stop-color="#7e4219" />
+              </linearGradient>
+              <linearGradient id="mkSlit" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#1e0c03" />
+                <stop offset="1" stop-color="#4a220a" />
+              </linearGradient>
+              <linearGradient id="mkHousing" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#5c3d27" />
+                <stop offset="1" stop-color="#2e1d12" />
+              </linearGradient>
+              <linearGradient id="mkHousingTop" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#8a6446" />
+                <stop offset="1" stop-color="#5c3d27" />
+              </linearGradient>
+              <linearGradient id="mkStem" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#9a5a2a" />
+                <stop offset=".5" stop-color="#d9914f" />
+                <stop offset="1" stop-color="#9a5a2a" />
+              </linearGradient>
+            </defs>
+
+            <ellipse cx="120" cy="254" rx="96" ry="10" fill="#3b2a1e" opacity=".22" />
+
+            <!-- 아래: 스위치 받침 (움직이지 않음) -->
+            <g class="mk-base">
+              <rect x="42" y="210" width="156" height="38" rx="12" fill="url(#mkHousing)" />
+              <path d="M62 212 L74 194 L166 194 L178 212 Z" fill="url(#mkHousingTop)" />
+              <path d="M74 194 L166 194" stroke="#b08a66" stroke-width="2" stroke-linecap="round" />
+              <circle class="mk-led" cx="120" cy="230" r="5" />
+              <!-- 십자 스템: 평소엔 살짝 보이고, 누르면 목탁에 가려짐 -->
+              <rect x="113" y="150" width="14" height="46" rx="2" fill="url(#mkStem)" />
+              <rect x="101" y="178" width="38" height="11" rx="2" fill="url(#mkStem)" />
+            </g>
+
+            <!-- 위: 목탁 캡 (눌리는 부분) -->
+            <g class="mk-cap">
+              <g class="moktak-body">
+                <path d="M82 66 C74 -4 166 -4 158 66" fill="none" stroke="#5a2c0e" stroke-width="22" stroke-linecap="round" opacity=".35" transform="translate(0 3)" />
+                <path d="M82 66 C74 -4 166 -4 158 66" fill="none" stroke="url(#mkHandle)" stroke-width="18" stroke-linecap="round" />
+                <path d="M88 34 C98 14 128 10 146 20" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".35" />
+                <ellipse cx="120" cy="112" rx="98" ry="72" fill="url(#mkWood)" />
+                <path d="M34 92 Q120 66 206 92 M28 110 Q120 86 212 110 M34 140 Q120 120 206 140" fill="none" stroke="#7a3d14" stroke-width="1.6" opacity=".22" />
+                <ellipse cx="82" cy="78" rx="34" ry="13" fill="#fff" opacity=".32" transform="rotate(-16 82 78)" />
+                <path d="M30 130 Q120 172 210 130" fill="none" stroke="#e7a466" stroke-width="13" stroke-linecap="round" opacity=".55" transform="translate(0 4)" />
+                <path d="M30 130 Q120 172 210 130" fill="none" stroke="url(#mkSlit)" stroke-width="10" stroke-linecap="round" />
+                <g class="face-worry">
+                  <path d="M84 104 L102 97 M156 104 L138 97" stroke="#3a1a06" stroke-width="3.4" stroke-linecap="round" />
+                  <ellipse cx="98" cy="113" rx="4.2" ry="5.2" fill="#2a1205" />
+                  <ellipse cx="142" cy="113" rx="4.2" ry="5.2" fill="#2a1205" />
+                  <path class="sweat" d="M176 86 q7 12 0 15 q-7 -3 0 -15z" fill="#d8eeff" stroke="#6d98bf" stroke-width="1.2" />
+                </g>
+                <g class="face-calm">
+                  <path d="M89 115 Q98 106 107 115 M133 115 Q142 106 151 115" fill="none" stroke="#3a1a06" stroke-width="3.4" stroke-linecap="round" />
+                  <ellipse cx="80" cy="126" rx="10" ry="5" fill="#ff8f9f" opacity=".45" />
+                  <ellipse cx="160" cy="126" rx="10" ry="5" fill="#ff8f9f" opacity=".45" />
+                </g>
+              </g>
+            </g>
+          </svg>
+        </button>
+        <span class="mk-switch-label" aria-hidden="true">TACTILE 갈축 · 1타 1번뇌</span>
+        <p class="moktak-count" aria-live="polite"><strong id="moktakCount">108</strong><span id="moktakLabel">남은 번뇌</span></p>
+        <div class="moktak-pops" id="moktakPops" aria-hidden="true"></div>
+      </div>
+
+      <p class="hero-caption"><span class="route-tag">SINCE 2026 · AI 법당</span>AI 고르다 지친 중생 여러분, 고생 많았어요. 조원들이 직접 써본 <strong id="heroCount">0</strong>개의 AI로 번뇌를 덜어드릴게요.</p>
+      <a class="hero-down" href="#types" aria-label="아래로"><span>SCROLL DOWN</span>↓</a>
+    </section>
+
+    <!-- ===== 흐르는 띠 ===== -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track" id="marquee"></div>
+    </div>
+
+    <!-- ===== 육바라밀(분야)별 AI ===== -->
+    <section class="types" id="types">
+      <div class="container">
+        <div class="big-head">
+          <span class="route-tag">01 · PICK YOUR 바라밀</span>
+          <h2><span>오늘의 수행</span> <em>고르기</em></h2>
+          <p>뭘 써야 할지 모르겠다면? 오늘의 수행부터 골라 보세요. 그 분야에 딱 맞는 AI만 모아서 보여드려요.</p>
+        </div>
+        <div class="type-grid" id="typeGrid"></div>
+      </div>
+    </section>
+
+    <!-- ===== 동자승 소개 ===== -->
+    <section class="about" id="about">
+      <div class="container about-inner">
+        <div class="about-text">
+          <span class="route-tag">02 · MEET 동자승</span>
+          <h2>AI 고르다 생긴 번뇌,<br /><em>동자승</em>이 접수합니다</h2>
+          <p>조원들이 직접 써보고 정리한 요금, 장점, 단점을 굿즈 카드처럼 모아 놨어요. 궁금한 건 길잡이 동자승한테 물어보세요. 답장은 빛의 속도로 ⚡</p>
+          <div class="about-actions">
+            <a class="btn btn-red" href="#services">경전 펼치기</a>
+            <button class="btn" type="button" id="aboutGuide">가이드 보기</button>
+          </div>
+        </div>
+
+        <div class="about-stage">
+          <img class="stage-photo" src="img/temple/seokguram.jpg" alt="석굴암 가는 길에 걸린 오색 연등" />
+          <span class="sticker stage-sticker" aria-hidden="true">마음 평화 +100</span>
+          <div class="game-box">
+            <p id="aboutLine">AI 고르다 생긴 번뇌, 여기 두고 가세요.</p>
+            <span class="game-arrow">▼</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== AI 경전 목록 ===== -->
+    <section class="services" id="services">
+      <div class="container">
+        <div class="big-head big-head-row">
+          <div>
+            <span class="route-tag">03 · AI 경전 정주행</span>
+            <h2><span>AI 경전</span> <em>ALL SERVICES</em></h2>
+          </div>
+          <p class="result-info" id="resultInfo"></p>
+        </div>
+        <div class="filters" id="filters" role="tablist" aria-label="카테고리 필터"></div>
+        <div class="grid" id="grid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- ===== 마무리 배너 ===== -->
+    <section class="cta">
+      <div class="container cta-inner">
+        <div>
+          <span class="route-tag light">GOAL · 해탈 완료</span>
+          <h2>번뇌는 접고<br /><em>극락은 켜고!</em></h2>
+        </div>
+        <div class="cta-team" aria-hidden="true">
+          <img src="img/temple/lotus2.jpg" alt="" />
+          <img src="img/temple/lanterns.jpg" alt="" />
+          <img src="img/temple/birojeon.jpg" alt="" />
+          <img src="img/temple/pagoda.jpg" alt="" />
+        </div>
+        <div class="cta-actions">
+          <button class="btn btn-yellow" type="button" id="ctaSearch">검색하기</button>
+          <button class="btn btn-ghost" type="button" id="ctaGuide">가이드 보기</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-cols">
+        <div>
+          <h4>둘러보기</h4>
+          <a href="#top">처음으로</a>
+          <a href="#types">육바라밀별 AI</a>
+          <a href="#services">AI 경전</a>
+        </div>
+        <div>
+          <h4>육바라밀</h4>
+          <span>📿 정진 · 바이브 코딩</span>
+          <span>🏯 지계 · 웹/UI/UX</span>
+          <span>📜 지혜 · 글쓰기/리서치</span>
+        </div>
+        <div>
+          <h4>&nbsp;</h4>
+          <span>🏮 보시 · 영상</span>
+          <span>🔔 선정 · 음성/음악</span>
+          <span>🪷 인욕 · 시각화/PPT</span>
+        </div>
+      </div>
+      <p class="footer-giant">AI 법당</p>
+      <div class="footer-copy"><span>© 2026 TEAM 펭도리빵 · 시각화/PPT 파트 강현서</span><span>분야별 필수 AI 서비스 리스트 · 사진: Wikimedia Commons (퍼블릭 도메인 / CC0)</span></div>
+    </div>
+  </footer>
+
+  <!-- ===== 동자승 가이드 (법문 대화창) ===== -->
+  <div class="guide" id="guide" role="dialog" aria-label="동자승 가이드" aria-hidden="true">
+    <span class="wheel guide-ball" aria-hidden="true"></span>
+    <div class="guide-body">
+      <span class="guide-name">길잡이 동자승</span>
+      <p class="guide-text" id="guideText"></p>
+      <div class="guide-foot">
+        <div class="guide-dots" id="guideDots"></div>
+        <button class="guide-next" id="guideNext">다음 ▶</button>
+      </div>
+    </div>
+    <button class="guide-close" id="guideClose" aria-label="가이드 닫기">✕</button>
+  </div>
+
+  <!-- 법륜 버튼 -->
+  <button class="ball-fab" id="ballFab" aria-label="동자승 가이드 열기">
+    <span class="wheel big" aria-hidden="true"></span>
+  </button>
+
+  <!-- 데이터 → 목록 기능 → 첫 화면/가이드 순서로 불러오기 -->
+  <script src="js/services.js"></script>
+  <!-- 팀원별 데이터 (분야마다 한 파일, 불러온 순서대로 목록에 표시) -->
+  <script src="js/data/visual-ppt.js"></script>
+  <script src="js/data/vibe-coding.js"></script>
+  <script src="js/data/web-ui-ux.js"></script>
+  <script src="js/data/writing-research.js"></script>
+  <script src="js/data/video.js"></script>
+  <script src="js/data/voice-music.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/bgm.js"></script>
+</body>
+</html>

@@ -1,0 +1,667 @@
+/* =========================================================
+   섹션별 스타일: 첫 화면 · 목탁 키캡 · 흐르는 띠 · 육바라밀 · 동자승 · 마무리 · 푸터 · 가이드
+   ========================================================= */
+
+/* ===== 첫 화면 (연회색 바탕 + 굵은 제목 + 목탁 키캡) ===== */
+.hero {
+  position: relative;
+  overflow: hidden;
+  min-height: calc(100vh - var(--topbar-h));
+  min-height: calc(100svh - var(--topbar-h));
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  align-items: center;
+  justify-items: center;
+  gap: 40px;
+  padding: 80px 40px 150px;
+  background-color: var(--cream);
+  background-image: radial-gradient(rgba(26, 26, 28, .12) 1.2px, transparent 1.3px);
+  background-size: 24px 24px;
+  color: var(--text);
+}
+
+/* 뒤에서 천천히 도는 거대한 법륜 윤곽 */
+.hero-ball {
+  position: absolute;
+  right: -18vmax;
+  top: 50%;
+  width: 70vmax;
+  height: 70vmax;
+  margin-top: -35vmax;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 94, 16, .16);
+  background:
+    radial-gradient(circle, rgba(255, 94, 16, .12) 0 7%, transparent 7.3% 12%, rgba(255, 94, 16, .14) 12% 12.4%, transparent 12.7% 86%, rgba(255, 94, 16, .14) 86% 86.6%, transparent 87%),
+    repeating-conic-gradient(from -.6deg, rgba(255, 94, 16, .12) 0 1.2deg, transparent 1.2deg 45deg);
+  animation: spinBall 60s linear infinite;
+  pointer-events: none;
+}
+@keyframes spinBall { to { transform: rotate(360deg); } }
+
+/* 굿즈 스티커 (첫 화면 여기저기 붙어 둥실둥실) */
+.hero .sticker { position: absolute; z-index: 2; animation: bob 4s ease-in-out infinite; }
+.hero .s1 { left: 6%; top: 12%; rotate: -8deg; background: var(--lime); }
+.hero .s2 { left: 38%; bottom: 25%; rotate: 5deg; background: var(--pink); animation-delay: -1.3s; }
+.hero .s3 { right: 5%; top: 10%; rotate: 7deg; background: var(--sky); animation-delay: -2.6s; }
+@keyframes bob {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -8px; }
+}
+
+.hero-title {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: clamp(46px, 7.2vw, 128px);
+  line-height: .98;
+  letter-spacing: -.05em;
+  text-transform: uppercase;
+  max-width: 100%;
+}
+.line {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0 .2em;
+}
+.line + .line { margin-top: .06em; }
+
+/* 단어가 아래에서 올라오며 나타남 */
+.w { display: inline-block; overflow: hidden; padding: 0 .06em .06em 0; }
+.w > span {
+  display: inline-block;
+  transform: translateY(110%);
+  animation: rise .9s cubic-bezier(.2, .8, .2, 1) forwards;
+}
+.line:nth-child(1) .w:nth-child(1) > span { animation-delay: .05s; }
+.line:nth-child(1) .w:nth-child(2) > span { animation-delay: .18s; }
+.line:nth-child(2) .w:nth-child(1) > span { animation-delay: .32s; }
+.line:nth-child(2) .w:nth-child(3) > span { animation-delay: .5s; }
+@keyframes rise { to { transform: none; } }
+.it { color: var(--red); }
+
+/* 굿즈 로고처럼: 오렌지 글자 + 먹색 테두리 + 그림자 */
+.logo-word > span {
+  color: var(--red);
+  -webkit-text-stroke: .035em var(--line);
+  paint-order: stroke fill;
+  text-shadow: .05em .05em 0 var(--line);
+}
+
+/* 제목 속 동그란 사진 칸 (펼쳐지며 등장) */
+.media {
+  display: inline-block;
+  width: 0;
+  height: .78em;
+  overflow: hidden;
+  border: .04em solid var(--line);
+  border-radius: 999px;
+  animation: openMedia 1s cubic-bezier(.2, .8, .2, 1) .45s forwards;
+}
+@keyframes openMedia { to { width: 1.5em; } }
+.media-inner { display: block; width: 100%; height: 100%; }
+.media-inner img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 35%; display: block; }
+
+.hero-caption {
+  position: absolute;
+  left: 40px;
+  bottom: 32px;
+  z-index: 1;
+  max-width: 560px;
+  font-size: clamp(15px, 1.4vw, 18px);
+  color: var(--text-sub);
+}
+.hero-caption strong { color: var(--red); }
+.hero-caption .route-tag { display: flex; width: max-content; margin-bottom: 10px; }
+.hero-down {
+  position: absolute;
+  right: 40px;
+  bottom: 32px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: var(--text);
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-decoration: none;
+}
+.hero-down span { writing-mode: vertical-rl; }
+.hero-down:hover { color: var(--red); }
+
+/* ===== 첫 화면 배경: DJ 스님 "부처핸섬" (세피아로 따뜻하게, 양옆은 베이지로 밝게) ===== */
+.hero {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr) minmax(0, .85fr);
+  background: var(--cream);
+}
+.hero::before,
+.hero::after { content: ""; position: absolute; inset: 0; pointer-events: none; }
+.hero::before {
+  background: url("../img/hero-bg.png") center 30% / cover no-repeat;
+  filter: sepia(.6) saturate(1.05) brightness(1.12) contrast(.95);
+}
+.hero::after {
+  background:
+    linear-gradient(180deg, transparent 72%, rgba(239, 228, 211, .95) 100%),
+    linear-gradient(90deg, rgba(239, 228, 211, .97) 0%, rgba(239, 228, 211, .75) 27%, rgba(239, 228, 211, 0) 44%, rgba(239, 228, 211, 0) 60%, rgba(239, 228, 211, .75) 76%, rgba(239, 228, 211, .97) 100%);
+}
+.hero-ball { display: none; }
+.hero-title { grid-column: 1; font-size: clamp(40px, 4.9vw, 92px); }
+.hero .logo-word > span { -webkit-text-stroke: 0; color: var(--red); text-shadow: .04em .04em 0 rgba(59, 42, 30, .25); }
+.hero .s2 { left: 50%; bottom: 20%; translate: -50% 0; }
+@keyframes bobC {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.hero .s2 { animation-name: bobC; }
+.moktak-zone { grid-column: 3; }
+
+/* ===== 번뇌하는 목탁 키캡 ===== */
+.moktak-zone {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.moktak-hint {
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: 15px;
+  letter-spacing: .08em;
+  text-align: center;
+}
+.moktak-hint span {
+  display: block;
+  font-family: var(--hand);
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: 0;
+  color: var(--text-sub);
+}
+
+/* 목탁 키캡: 위(.mk-cap)만 눌리고 아래(.mk-base 스위치)는 고정 */
+.moktak-key {
+  width: clamp(220px, 21vw, 290px);
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.moktak-key:focus-visible { outline: 3px solid var(--red); outline-offset: 8px; border-radius: 24px; }
+.mk { display: block; width: 100%; height: auto; overflow: visible; }
+
+/* 뗄 때는 스프링처럼 살짝 튕기며 올라옴 */
+.mk-cap { transition: transform .2s cubic-bezier(.3, 1.8, .5, 1); }
+.moktak-key.pressed .mk-cap { transform: translateY(15px); transition-duration: .05s; transition-timing-function: ease-out; }
+.mk-led { fill: #4a3020; transition: fill .05s, filter .05s; }
+.moktak-key.pressed .mk-led { fill: #ffd58a; filter: drop-shadow(0 0 6px #ffb347) drop-shadow(0 0 12px #ff9a2e); }
+.mk-switch-label {
+  margin-top: -6px;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: .16em;
+  color: var(--text-sub);
+}
+
+.moktak-body { transform-box: view-box; transform-origin: 120px 184px; }
+.face-calm { opacity: 0; }
+.sweat { animation: sweat 1.6s ease-in-out infinite; }
+@keyframes sweat {
+  0%, 100% { translate: 0 0; opacity: 1; }
+  60% { translate: 0 8px; opacity: .3; }
+}
+
+/* 칠 때: 목탁이 살짝 찌그러지고, 표정이 평온해짐 */
+.moktak-key.hit .moktak-body { animation: squish .3s ease-out; }
+.moktak-key.hit .face-worry,
+.moktak-key.nirvana .face-worry { opacity: 0; transition: opacity .1s; }
+.moktak-key.hit .face-calm,
+.moktak-key.nirvana .face-calm { opacity: 1; }
+.face-worry, .face-calm { transition: opacity .5s .15s; }
+@keyframes squish {
+  0%, 100% { scale: 1 1; }
+  35% { scale: 1.06 .92; }
+  65% { scale: .98 1.03; }
+}
+/* 해탈하면 LED가 금빛으로 계속 켜짐 */
+.moktak-key.nirvana .mk-led { fill: #ffe08a; filter: drop-shadow(0 0 8px #ffc94d); }
+
+.moktak-count {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 6px 16px;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 3px 3px 0 var(--line);
+  font-size: 14px;
+  font-weight: 700;
+}
+.moktak-count strong {
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 1;
+  color: var(--red);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 누를 때 튀어 오르는 글자 */
+.moktak-pops { position: absolute; inset: 0; pointer-events: none; }
+.moktak-pop {
+  position: absolute;
+  top: 34%;
+  translate: -50% 0;
+  padding: 4px 12px;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  background: var(--yellow);
+  font-family: var(--hand);
+  font-weight: 700;
+  font-size: 17px;
+  white-space: nowrap;
+  rotate: var(--tilt, 0deg);
+  animation: popUp 1s ease-out forwards;
+}
+@keyframes popUp {
+  0% { transform: translateY(0) scale(.6); opacity: 0; }
+  15% { transform: translateY(-20px) scale(1.08); opacity: 1; }
+  100% { transform: translateY(-120px) scale(1); opacity: 0; }
+}
+
+/* ===== 흐르는 띠 (비스듬한 굿즈 테이프) ===== */
+.marquee {
+  position: relative;
+  z-index: 4;
+  overflow: hidden;
+  margin: -26px -2vw 0;
+  background: var(--dark);
+  border-top: 2.5px solid var(--line);
+  border-bottom: 2.5px solid var(--line);
+  color: #fff;
+  rotate: -1.6deg;
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 34s linear infinite;
+}
+.marquee-track span {
+  display: inline-flex;
+  align-items: center;
+  gap: 22px;
+  padding: 14px 22px;
+  font-family: var(--display);
+  font-weight: 900;
+  letter-spacing: -.02em;
+  font-size: clamp(22px, 2.6vw, 34px);
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+.marquee-track span:nth-child(even) { color: var(--yellow); }
+.marquee-sym { font-style: normal; font-size: .9em; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* ===== 육바라밀(분야)별 AI ===== */
+.types { padding: 130px 0 100px; background: var(--paper); }
+.type-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.type-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 230px;
+  padding: 20px 22px;
+  border: 2.5px solid var(--dark);
+  border-radius: 28px;
+  background: var(--tc);
+  color: #fff;
+  isolation: isolate;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 6px 6px 0 var(--dark);
+  transition: transform .2s, box-shadow .2s;
+}
+.type-card:hover { transform: translate(-3px, -3px) rotate(-1deg); box-shadow: 9px 9px 0 var(--dark); }
+.type-card::before {
+  /* 사진 위에 수행 색을 덮어 글자가 잘 보이게 */
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(100deg, var(--tc) 0 38%, color-mix(in srgb, var(--tc) 55%, transparent) 70%, transparent 100%);
+}
+.type-card::after {
+  /* 오른쪽 아래 법륜 무늬 */
+  content: "";
+  position: absolute;
+  right: -40px;
+  bottom: -40px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 10px solid rgba(255, 255, 255, .3);
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, .3) 0 14%, transparent 15%),
+    repeating-conic-gradient(from -3deg, rgba(255, 255, 255, .3) 0 6deg, transparent 6deg 45deg);
+}
+.type-top { position: relative; z-index: 1; display: flex; align-items: center; }
+.type-photo {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .5s;
+}
+.type-card:hover .type-photo { transform: scale(1.06); }
+.type-label {
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 2px solid var(--line);
+  background: #fff;
+  color: var(--text);
+  font-weight: 800;
+  font-size: 13px;
+  box-shadow: 2px 2px 0 var(--line);
+}
+.type-name {
+  position: relative;
+  z-index: 2;
+  display: block;
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: clamp(30px, 3.4vw, 44px);
+  line-height: 1;
+  letter-spacing: -.04em;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, .25);
+}
+.type-count { position: relative; z-index: 2; display: block; margin-top: 6px; font-weight: 700; font-size: 15px; opacity: .95; }
+.type-card.is-empty .type-count { opacity: .8; }
+
+/* ===== 동자승 소개 (사찰 사진 + 말풍선) ===== */
+.about { padding: 100px 0; background: var(--cream); }
+.about-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+.about-text h2 {
+  margin-top: 16px;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(40px, 5.2vw, 76px);
+  line-height: 1.08;
+  letter-spacing: -.045em;
+}
+.about-text h2 em { font-style: normal; color: var(--red); }
+.about-text p { margin-top: 18px; max-width: 520px; font-size: 17px; color: var(--text-sub); }
+.about-actions { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 30px; }
+
+.about-stage {
+  position: relative;
+  height: 520px;
+  border: 2.5px solid var(--dark);
+  border-radius: 32px;
+  overflow: hidden;
+  background: var(--dark);
+  box-shadow: 8px 8px 0 var(--dark);
+}
+.stage-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 40%;
+  animation: breathe 12s ease-in-out infinite alternate;
+}
+@keyframes breathe { to { transform: scale(1.08); } }
+.stage-sticker { position: absolute; top: 22px; right: 22px; rotate: 6deg; background: var(--lime); animation: bob 4s ease-in-out infinite; }
+@keyframes hop {
+  0%, 70%, 100% { transform: translateY(0); }
+  80% { transform: translateY(-12px); }
+  90% { transform: translateY(0); }
+}
+/* 동자승 말풍선 */
+.game-box {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  padding: 16px 20px;
+  border-radius: 22px;
+  background: var(--paper);
+  border: 2.5px solid var(--line);
+  box-shadow: 4px 4px 0 var(--line);
+  font-size: 18px;
+  font-weight: 700;
+  min-height: 84px;
+}
+.game-arrow {
+  position: absolute;
+  right: 16px;
+  bottom: 10px;
+  color: var(--red);
+  font-size: 14px;
+  animation: blink 1s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ===== 마무리 배너 ===== */
+.cta {
+  position: relative;
+  overflow: hidden;
+  padding: 100px 0;
+  background: var(--red);
+  color: #fff;
+}
+.cta::before {
+  /* 오른쪽 뒤에서 천천히 도는 거대한 법륜 */
+  content: "";
+  position: absolute;
+  right: -10vmax;
+  top: 50%;
+  width: 60vmax;
+  height: 60vmax;
+  margin-top: -30vmax;
+  border-radius: 50%;
+  border: 1.6vmax solid #fff;
+  background:
+    radial-gradient(circle, #fff 0 12%, transparent 12.5%),
+    repeating-conic-gradient(from -2deg, #fff 0 4deg, transparent 4deg 45deg);
+  opacity: .16;
+  animation: spinBall 90s linear infinite;
+}
+.cta-inner { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 30px; flex-wrap: wrap; }
+.cta h2 {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(56px, 9vw, 140px);
+  line-height: .98;
+  letter-spacing: -.05em;
+  text-transform: uppercase;
+}
+.cta h2 em {
+  font-style: normal;
+  color: var(--yellow);
+  -webkit-text-stroke: .03em var(--line);
+  paint-order: stroke fill;
+  text-shadow: .05em .05em 0 var(--line);
+}
+.cta-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+.cta-team { display: flex; align-items: flex-end; }
+.cta-team img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  margin-left: -26px;
+  border-radius: 50%;
+  border: 2.5px solid var(--line);
+  box-shadow: 4px 4px 0 var(--line);
+  animation: hop 2.8s ease-in-out infinite;
+}
+.cta-team img:first-child { margin-left: 0; }
+.cta-team img:nth-child(2) { animation-delay: .25s; }
+.cta-team img:nth-child(3) { animation-delay: .5s; }
+.cta-team img:nth-child(4) { animation-delay: .75s; }
+
+/* ===== 푸터 ===== */
+.footer { padding: 70px 0 28px; background: var(--dark); color: #d6d6dc; }
+.footer-cols { display: flex; gap: 60px; flex-wrap: wrap; }
+.footer-cols div { display: flex; flex-direction: column; gap: 6px; font-size: 15px; }
+.footer-cols h4 { font-family: var(--display); font-weight: 800; font-size: 18px; color: var(--red); margin-bottom: 4px; }
+.footer-cols a { color: #d6d6dc; text-decoration: none; }
+.footer-cols a:hover { color: #fff; }
+.footer-giant {
+  margin: 40px 0 20px;
+  font-family: var(--display);
+  font-size: clamp(90px, 22vw, 340px);
+  line-height: .9;
+  letter-spacing: -.05em;
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(242, 207, 134, .6);
+  white-space: nowrap;
+  text-align: center;
+}
+.footer-copy {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, .15);
+  font-size: 13.5px;
+  color: #8d8d96;
+}
+
+/* ===== 법륜 버튼 + 동자승 법문 가이드 ===== */
+.ball-fab {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 46;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, .3));
+  opacity: 0;
+  transform: translateY(30px) scale(.6);
+  pointer-events: none;
+  transition: opacity .3s, transform .4s cubic-bezier(.3, 1.6, .5, 1);
+}
+.ball-fab.show { opacity: 1; transform: none; pointer-events: auto; }
+.ball-fab:hover .wheel { animation: turn .8s ease; }
+
+.guide {
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  z-index: 60;
+  width: min(760px, calc(100vw - 32px));
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  padding: 18px 20px 16px;
+  border-radius: 24px;
+  background: var(--paper);
+  border: 2.5px solid var(--line);
+  box-shadow: 6px 6px 0 var(--line), 0 20px 50px rgba(0, 0, 0, .25);
+  translate: -50% 30px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s, translate .3s cubic-bezier(.3, 1.4, .5, 1);
+}
+.guide.open { translate: -50% 0; opacity: 1; pointer-events: auto; }
+.guide-ball { width: 44px; height: 44px; align-self: flex-start; margin-top: 4px; border-width: 3px; --gold: #fff; --wheel-bg: var(--red); box-shadow: 0 0 0 2px var(--line); }
+.guide-body { flex: 1; min-width: 0; }
+.guide-name {
+  display: inline-block;
+  padding: 2px 12px;
+  border-radius: 999px;
+  background: var(--red);
+  color: #fff;
+  font-weight: 800;
+  font-size: 13px;
+}
+.guide-text { margin-top: 6px; min-height: 3.4em; font-size: 17px; font-weight: 700; line-height: 1.6; white-space: pre-line; }
+.guide-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; }
+.guide-dots { display: flex; gap: 6px; }
+.guide-dots span { width: 9px; height: 9px; border-radius: 50%; background: #d9d9d9; transition: all .3s; }
+.guide-dots span.on { background: var(--red); transform: scale(1.3); }
+.guide-next {
+  height: 36px;
+  padding: 0 16px;
+  border: 2.5px solid var(--line);
+  border-radius: 999px;
+  background: var(--yellow);
+  color: var(--navy);
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+}
+.guide-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-sub);
+  cursor: pointer;
+}
+.guide-close:hover { background: #f1f1f1; }
+
+/* ===== 반응형 ===== */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: minmax(0, 1fr); gap: 34px; padding: 90px 20px 170px; }
+  .hero::before { background-position: center top; background-size: auto 62%; }
+  .hero::after { background: linear-gradient(180deg, rgba(239, 228, 211, .35) 0%, rgba(239, 228, 211, .5) 35%, rgba(239, 228, 211, .92) 62%, var(--cream) 80%); }
+  .hero-title, .moktak-zone { grid-column: 1; }
+  .hero-title { font-size: clamp(40px, 11vw, 80px); }
+  .hero-title { align-items: center; text-align: center; }
+  .line { justify-content: center; }
+  .hero .s2 { display: none; }
+}
+@media (max-width: 1000px) {
+  .type-grid { grid-template-columns: repeat(2, 1fr); }
+  .about-inner { grid-template-columns: 1fr; }
+  .about-stage { height: 460px; }
+}
+@media (max-width: 640px) {
+  .hero { padding: 76px 16px 170px; }
+  .hero-title { font-size: clamp(40px, 12.5vw, 80px); }
+  .hero .sticker { font-size: 15px; padding: 6px 12px; }
+  .hero .s1 { left: 4%; top: 18px; }
+  .hero .s3 { right: 4%; top: 22px; }
+  .hero-caption { left: 18px; right: 60px; bottom: 52px; }
+  .hero-down { bottom: 52px !important; }
+  .hero-down { right: 18px; bottom: 22px; }
+  .type-grid { grid-template-columns: 1fr; }
+  .type-card { min-height: 180px; }
+  .cta-team img { width: 86px; height: 86px; margin-left: -18px; }
+  .about-stage { height: 420px; }
+  .guide { padding: 14px 14px 12px; }
+  .guide-text { font-size: 15px; }
+  .ball-fab { right: 14px; bottom: 14px; }
+  .wheel.big { width: 54px; height: 54px; }
+}
